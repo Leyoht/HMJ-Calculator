@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jmdatabase;
+package hmjcalc;
 
 /**
  *
  * @author dtdkn
  */
-public class Wine extends Drink {
-    
+public class mixDrink extends Drink {
+    //there needs to be some kind of attribute here to set the mixDrink apart from Drink
 }

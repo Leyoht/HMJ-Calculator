@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jmdatabase;
+package hmjcalc;
 
 /**
  *
  * @author dtdkn
  */
-public interface iDrinks {
-    
+public interface fiveSomewhere {
+    //it's always 5 o'clock somewhere!
+    //implement the API here, if possible
 }

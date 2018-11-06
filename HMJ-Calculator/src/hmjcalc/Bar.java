@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jmdatabase;
+package hmjcalc;
 
 /**
  *
  * @author dtdkn
  */
-public class mixDrink extends Drink {
-    //there needs to be some kind of attribute here to set the mixDrink apart from Drink
+public class Bar {
+    private static String name;
+    private static String getName() { return name; }
+    private static void setName(String name) { Bar.name = name; }
 }

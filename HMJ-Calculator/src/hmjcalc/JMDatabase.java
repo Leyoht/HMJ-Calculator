@@ -5,7 +5,7 @@
  Dr. Eric Matson
  * Course
  Object-Oriented Application Development*/
-package jmdatabase;
+package hmjcalc;
 
 public class JMDatabase {
 
