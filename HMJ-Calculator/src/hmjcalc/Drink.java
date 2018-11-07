@@ -13,6 +13,7 @@ public abstract class Drink implements iDrinks { //how to implement Java interfa
     private static String name;
     private static double alcoholContent;
     private static double volume;
+    private static int pKey; //primary key
     
     private static String getName() { return name; }
     private static void setName(String name) { Drink.name = name; }
