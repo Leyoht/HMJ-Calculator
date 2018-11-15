@@ -7,7 +7,7 @@
  Object-Oriented Application Development*/
 package hmjcalc;
 
-public class JMDatabase {
+public class HMJcalc {
 
     private Person drinker = null;
 
