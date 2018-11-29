@@ -7,6 +7,8 @@
  Object-Oriented Application Development*/
 package hmjcalc;
 
+import hmjcalc.objects.Person;
+
 public class HMJcalc {
 
     private Person drinker = null;
