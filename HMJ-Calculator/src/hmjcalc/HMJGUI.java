@@ -4,13 +4,20 @@
  * and open the template in the editor.
  */
 package hmjcalc;
+import java.util.*;
+import java.io.*;
+import java.net.*;
 
 /**
  *
  * @author dtdkn
  */
 public class HMJGUI extends javax.swing.JFrame {
-
+    
+    Locale usEnglish = Locale.forLanguageTag("en-US");
+    Locale mxSpanish = Locale.forLanguageTag("es-MX");
+    Locale chChinese = Locale.forLanguageTag("zh-CN");
+    //String getdisplayLanguage(Locale usEnglish);
     /**
      * Creates new form HMJGUI
      */

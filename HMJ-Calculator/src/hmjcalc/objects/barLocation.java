@@ -5,7 +5,7 @@
  */
 package hmjcalc.objects;
 
-import hmjcalc.objects.Bar;
+import hmjcalc.objects.Bar; //this class will inherit barID from Bar
 
 /**
  *

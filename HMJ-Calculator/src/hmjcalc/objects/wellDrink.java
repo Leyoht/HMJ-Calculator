@@ -5,10 +5,12 @@
  */
 package hmjcalc.objects;
 
+import hmjcalc.objects.mixDrink;
+
 /**
  *
  * @author dtdkn
  */
-public class Wine extends Drink {
-    //drinkID is 3
+public class wellDrink extends mixDrink {
+    //mixID is 2
 }

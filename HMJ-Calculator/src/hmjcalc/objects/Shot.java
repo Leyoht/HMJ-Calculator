@@ -12,5 +12,5 @@ import hmjcalc.objects.Drink;
  * @author dtdkn
  */
 public class Shot extends Drink {
-    
+    //drinkID is 2
 }
