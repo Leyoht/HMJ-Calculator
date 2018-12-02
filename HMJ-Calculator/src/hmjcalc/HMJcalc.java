@@ -1,32 +1,18 @@
-/* Developers:
+/*
+== Developers ==
  Christopher Hale, Nicholas Jani, Kaustubh Joshi,
  Harrison Knill, Alexander Reynaud, Kevin Saligoe
- * Professor
+== Professor ==
  Dr. Eric Matson
- * Course
+== Course ==
  Object-Oriented Application Development*/
 package hmjcalc;
 
 import hmjcalc.objects.Person;
 
 public class HMJcalc {
-
-    private Person drinker = null;
-
-    /*private SingleUserAuthorizer authorizer =
-         new SingleUserAuthorizer {
-             CredentialStore =
-            new SingleUserInMemoryCredentialStore {
-                ConsumerKey =
-                "5rP4LsZumiGaGydGrZyAQdti9",
-                ConsumerSecret =
-               "a1vjFNjvJbmJiog2SrzMz5tPIMdL6Vlw0UTgDjFk8V4zRKiYkV",
-                AccessToken =
-               "937482707839406080-WFfoTIYhnKSzmhh2DXkxnEzGu4l0DRO",
-                AccessTokenSecret =
-               "SVsxZdb07qnfTsgKPqMYKWegDdO6VGFTGR1KR1uye2hfE"
-            }
-        };*/
+    //Google Places key: AIzaSyC8x423-pOCpAk7RWb2v3G86xS8-DbUSwk
+    
     //private List<Status> currentTweets;
     /*private void GetMostRecent20HomeTimeLine()
         {
@@ -41,34 +27,13 @@ public class HMJcalc {
 
     }*/
     
-    //THE FOLLOWING WILL GO IN JPANELS
-    /*private void btnSave_Click(object sender, EventArgs e)
-        {
-            drinker.setSex(cmbSex.Text);
-            drinker.setAge(decimal.ToInt32(txtAge.Value));
-            drinker.setWeight(decimal.ToInt32(txtWeight.Value));
-
-            String howLong = (String) txtDuration.SelectedItem;
-            double howLongNum = Convert.ToDouble(howLong);
-            drinker.setHowLongDrinking(howLongNum);
-
-            drinker.setDesiredDrunkness(cmbLitLevel.SelectedIndex + 1);
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            cmbSex.SelectedIndex = -1;
-            txtAge.Value = 0;
-            txtWeight.Value = 0;
-            txtDuration.SelectedIndex = -1;
-            cmbLitLevel.SelectedIndex = -1;
-        }*/
+    //THE FOLLOWING WILL GO IN HMJGUI
     private void btnHowManyDrinks_Click() {
-        boolean isLegal;
+        /*boolean isLegal;
         double numberOfDrinks;
         isLegal = drinker.areYouLegal();
 
-        /*if (isLegal) { //should work with the textbox or display in JPanel
+        if (isLegal) { //should work with the textbox or display in JPanel
             numberOfDrinks = drinker.howManyShouldIDrink();
 
             result.Text = "you should have " + numberOfDrinks + " drinks";
