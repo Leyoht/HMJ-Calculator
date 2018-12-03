@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hmjcalc;
+package hmjcalc.objects;
 
 /**
  *
  * @author dtdkn
  */
 public class Wine extends Drink {
-    
+    //drinkID is 3
 }

@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hmjcalc;
+package hmjcalc.objects;
+
+import hmjcalc.objects.Drink;
 
 /**
  *
  * @author dtdkn
  */
-public class Beer extends Drink {
-    
+public class Shot extends Drink {
+    //drinkID is 2
 }

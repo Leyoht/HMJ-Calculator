@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hmjcalc;
+package hmjcalc.objects;
+
+import hmjcalc.objects.Drink;
 
 /**
  *
  * @author dtdkn
  */
-public class Bar {
-    private static String name;
-    private static String getName() { return name; }
-    private static void setName(String name) { Bar.name = name; }
+public class Beer extends Drink {
+    //drinkID is 1
 }
