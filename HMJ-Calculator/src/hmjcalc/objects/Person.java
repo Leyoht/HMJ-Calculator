@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hmjcalc;
+package hmjcalc.objects;
 
 /**
  *
@@ -11,16 +11,16 @@ package hmjcalc;
  */
 public class Person {
     private static int age;
-    private static int getAge() { return age; }
-    private static void setAge(int age) { Person.age = age; }
+    public static int getAge() { return age; }
+    public static void setAge(int age) { Person.age = age; }
     
     private static int weight;
-    private static int getWeight() { return weight; }
-    private static void setWeight(int weight) { Person.weight = weight; }
+    public static int getWeight() { return weight; }
+    public static void setWeight(int weight) { Person.weight = weight; }
     
     private static boolean sex; //false for male, true for female
-    private static boolean getSex() { return sex; }
-    private static void setSex(boolean sex) {
+    public static boolean getSex() { return sex; }
+    public static void setSex(boolean sex) {
         if (sex == true) {
             Person.sex = true; //they are female
         } else {
@@ -30,12 +30,12 @@ public class Person {
     
     //dDrunk means "desired drunkenness"
     private static int dDrunk; //ask (on a scale of 1 - 10) how drunk someone wants to be
-    private static int getDDrunk() { return dDrunk; }
-    private static void setDDrunk(int dDrunk) { Person.dDrunk = dDrunk; }
+    public static int getDDrunk() { return dDrunk; }
+    public static void setDDrunk(int dDrunk) { Person.dDrunk = dDrunk; }
     
-    private static int howLongDrinking; //how many hours someone is drinking
-    private static int gethLD() { return howLongDrinking; }
-    private static void sethLD(int hLD) { Person.howLongDrinking = hLD; }
+    private static double howLongDrinking; //how many hours someone is drinking
+    public static double gethLD() { return howLongDrinking; }
+    public static void sethLD(double hLD) { Person.howLongDrinking = hLD; }
     
     /*There will be an algorithm to detect the preferred drink of the user.
     * The system will simply look at the user's history and determine
@@ -43,8 +43,8 @@ public class Person {
     * will be shown as the preferred drink.
     * Not sure if we should use Strings or a drink ID for this.*/
     private static String prefDrink;
-    private static String getPDrink() { return prefDrink; }
-    private static void setPDrink(String prefDrink) {Person.prefDrink = prefDrink; }
+    public static String getPDrink() { return prefDrink; }
+    public static void setPDrink(String prefDrink) {Person.prefDrink = prefDrink; }
     
     public static double roundAvoid(double value, int places) {
         double scale = Math.pow(10, places);
