@@ -11,10 +11,10 @@ package hmjcalc.objects;
  */
 public class Bar {
     private static String name;
-    private static String getName() { return name; }
-    private static void setName(String name) { Bar.name = name; }
+    public static String getName() { return name; }
+    public static void setName(String name) { Bar.name = name; }
     
     private static int barID;
-    private static int getID() { return barID; }
-    private static void setID(int barID) { Bar.barID = barID; }
+    public static int getID() { return barID; }
+    public static void setID(int barID) { Bar.barID = barID; }
 }

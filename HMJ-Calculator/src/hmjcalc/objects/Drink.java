@@ -17,12 +17,12 @@ public abstract class Drink implements iDrinks { //how to implement Java interfa
     private static double alcoholContent;
     private static double volume;
     
-    private static int getID() { return drinkID; }
-    private static void setID(int drinkID) { Drink.drinkID = drinkID; }
-    private static String getName() { return name; }
-    private static void setName(String name) { Drink.name = name; }
-    private static Double getAC() { return alcoholContent; }
-    private static void setAC(Double ac) { Drink.alcoholContent = ac; }
-    private static Double getVolume() { return volume; }
-    private static void setVolume(Double volume) { Drink.volume = volume; }
+    public static int getID() { return drinkID; }
+    public static void setID(int drinkID) { Drink.drinkID = drinkID; }
+    public static String getName() { return name; }
+    public static void setName(String name) { Drink.name = name; }
+    public static Double getAC() { return alcoholContent; }
+    public static void setAC(Double ac) { Drink.alcoholContent = ac; }
+    public static Double getVolume() { return volume; }
+    public static void setVolume(Double volume) { Drink.volume = volume; }
 }
