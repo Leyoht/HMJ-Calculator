@@ -1,0 +1,18 @@
+=== Logic behind the timezonedb API ===
+To preface everything that will be stated in this document, I will state now that we are throwing out the Twitter API in favor of something that will work much better at telling us the time, location of time, and the affiliated timezone.
+We will need to get information from the API of timezonedb. Here is the information we will need
+>countryName
+>zoneName
+>timestamp
+With this information, we will be able to output the name of a zone and a country to jta5oclock. The zones/countries shown will be loaded ONLY if a specific time parameter is met in the timestamp. By taking out a substring of the timestamp, we'll be able to show places that are currently set in 5:00pm. Understand that the timestamp is in UNIX UTC time, so we'll need to know how the standard there works.
+The code will work with XML and go something like this:
+# String timestampString = substr(timestamp, 6, 11);
+# if (timestampString = <5:00pm in UNIX time>) {
+#	jta5oclock.append(countryName + " " + zoneName);
+# } //a for loop might actually be better for this kind of thing
+
+=== Helpful links ===
+# https://en.wikipedia.org/wiki/Unix_time
+# https://timezonedb.com/references/list-time-zone
+# https://rapidapi.com/seikan/api/timezonedb-find-local-time-zone-by-coordinate-or-name
+# https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html

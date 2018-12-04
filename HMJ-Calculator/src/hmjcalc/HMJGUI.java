@@ -120,6 +120,7 @@ public class HMJGUI extends javax.swing.JFrame {
         jlDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlDesired.setText("Desired Level of Drunkenness: ");
 
+        jlDuration.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlDuration.setText("Duration:");
 
         jcboDuration.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
@@ -129,11 +130,12 @@ public class HMJGUI extends javax.swing.JFrame {
         jlTitle.setText("How Many Jrinks?");
 
         jcboDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - Social", "2 - Witty & Charming", "3 - Buzzed", "4 - Patriotic", "5 - Tipsy", "6 - Horny", "7 - Sloppy", "8 - Reckless ", "9 - Train Wreck", "10 - Dead" }));
+        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jcboBar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboBar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
 
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 2, 16)); // NOI18N
         jLabel1.setText("It's 5 O'clock somewhere!");
 
         jlBarInfo.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -149,6 +151,7 @@ public class HMJGUI extends javax.swing.JFrame {
         jlAContent.setText("Alcohol Content");
         jlAContent.setToolTipText("");
 
+        jbtnSave.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         jbtnSave.setText("Save");
         jbtnSave.setToolTipText("");
         jbtnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +160,7 @@ public class HMJGUI extends javax.swing.JFrame {
             }
         });
 
+        jbtnClear.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         jbtnClear.setText("Clear");
         jbtnClear.setToolTipText("");
         jbtnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +169,7 @@ public class HMJGUI extends javax.swing.JFrame {
             }
         });
 
+        jlHMSID.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jlHMSID.setText("How Many Should I Drink?");
 
         jtaHMSID.setColumns(20);
@@ -335,16 +340,16 @@ public class HMJGUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    //maybe we should make a "Load" button to get information from the Person class when 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         Boolean isMale;
         if (jcboSex.getSelectedItem().toString().equals("Male")) { isMale = true; }
         else { isMale = false; }
         user.setSex(isMale);
-        user.setAge((Integer)jsAge.getValue());
-        user.setWeight((Integer)jsWeight.getValue());
-        user.sethLD((Double)jcboDuration.getSelectedItem());
-        user.setDDrunk((Integer)jcboDesired.getSelectedItem());
+        user.setAge(Integer.parseInt(jsAge.getValue().toString()));
+        user.setWeight(Integer.parseInt(jsWeight.getValue().toString()));
+        user.sethLD(Double.parseDouble(jcboDuration.getSelectedItem().toString()));
+        user.setDDrunk(Integer.parseInt(jcboDesired.getSelectedItem().toString()));
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
     private void jbtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearActionPerformed
