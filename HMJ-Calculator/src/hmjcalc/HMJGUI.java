@@ -7,6 +7,11 @@ package hmjcalc;
 
 import hmjcalc.objects.Person;
 import java.util.*;
+import java.awt.FlowLayout;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+
 //will need to import API stuff here
 
 /**
@@ -129,7 +134,12 @@ public class HMJGUI extends javax.swing.JFrame {
         jlTitle.setText("How Many Jrinks?");
 
         jcboDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - Social", "2 - Witty & Charming", "3 - Buzzed", "4 - Patriotic", "5 - Tipsy", "6 - Horny", "7 - Sloppy", "8 - Reckless ", "9 - Train Wreck", "10 - Dead" }));
+        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        jcboDesired.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcboDesiredActionPerformed(evt);
+            }
+        });
 
         jcboBar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboBar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
@@ -166,6 +176,11 @@ public class HMJGUI extends javax.swing.JFrame {
         });
 
         jlHMSID.setText("How Many Should I Drink?");
+        jlHMSID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jlHMSIDActionPerformed(evt);
+            }
+        });
 
         jtaHMSID.setColumns(20);
         jtaHMSID.setRows(5);
@@ -338,13 +353,17 @@ public class HMJGUI extends javax.swing.JFrame {
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         Boolean isMale;
-        if (jcboSex.getSelectedItem().toString().equals("Male")) { isMale = true; }
-        else { isMale = false; }
-        user.setSex(isMale);
-        user.setAge((Integer)jsAge.getValue());
-        user.setWeight((Integer)jsWeight.getValue());
-        user.sethLD((Double)jcboDuration.getSelectedItem());
-        user.setDDrunk((Integer)jcboDesired.getSelectedItem());
+if (jcboSex.getSelectedItem().toString().equals("Male")) { 
+    isMale = true; 
+}
+else { 
+    isMale = false; 
+}
+    user.setSex(isMale);
+    user.setAge(Integer.parseInt(jsAge.getValue().toString()));
+    user.setWeight(Integer.parseInt(jsWeight.getValue().toString()));
+    user.sethLD(Double.parseDouble(jcboDuration.getSelectedItem().toString()));
+    user.setDDrunk(Integer.parseInt(jcboDesired.getSelectedItem().toString()));
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
     private void jbtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearActionPerformed
@@ -355,6 +374,43 @@ public class HMJGUI extends javax.swing.JFrame {
         jcboDesired.setSelectedItem("1 - Social");
     }//GEN-LAST:event_jbtnClearActionPerformed
 
+    private void jcboDesiredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDesiredActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcboDesiredActionPerformed
+
+    private void jlHMSIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlHMSIDActionPerformed
+        // TODO add your handling code here:
+        boolean isLegal;
+        double numberOfDrinks;
+        isLegal = user.areYouLegal();
+
+        if (isLegal == true) { //should work with the textbox or display in JPanel
+            numberOfDrinks = user.howManyShouldIDrink();
+
+            jtaHMSID.append("you should have " + numberOfDrinks + " drinks");
+        } else {
+            jtaHMSID.append("you are not old enough to drink. Try again later");
+        }
+        
+    }//GEN-LAST:event_jlHMSIDActionPerformed
+//    private void jcboBarDrinkListings(object sender, EventArgs e)
+//        {
+//            if (jcboBar.SelectedIndex == 0)
+//            {   
+//                String[] harrysDrinks = {"Blue Hawaiian: Malibu, Blue Curacao, Pineapple", "Grasshopper: Creme de Menthe Dark, Creme de Cacao Light, Half and Half", "Sex on the Beach: Vodka, Amaretto, Peach, Blackberry Brandy, OJ, Grenadine"};
+//                JList1.add(harrysDrinks
+//            }
+//            else if (jcboBar  == 1)
+//            {
+//                
+//                jList1.add("Thursday: $1.50 Double Well Mixers, $2.50 Bud Light Drafts, $2.50 Fireball Shots" + Environment.NewLine +
+//                                        "Friday: $4 Double Wells, $3 Shots(Fireball, Lemon Drop, Cheesecake, etc)" + Environment.NewLine +
+//                                        "Saturday: $4 Double Wells, $3 Shots(Fireball, Lemon Drop, Cheesecake, etc)");
+//            }
+//            else if (jcboBar == 2)
+//                jList1.add("Thursday: $3.50 32 ox Mixed Drinks (Shirley Temple, Long Islands, etc)");
+//
+//        }
     /**
      * @param args the command line arguments
      */
