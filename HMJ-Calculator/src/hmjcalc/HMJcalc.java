@@ -58,26 +58,6 @@ public class HMJcalc {
             else if (cmbBars.SelectedIndex == 2)
                 txtPopularDrinks.Text = "Thursday: $3.50 32 ox Mixed Drinks (Shirley Temple, Long Islands, etc)";
 
-        }
-
-        private void btnBeer_Click(object sender, EventArgs e)
-        {
-            txtAlcoholContent.Text = "4.5% ABV";
-        }
-
-        private void btnWine_Click(object sender, EventArgs e)
-        {
-            txtAlcoholContent.Text = "12% ABV";
-        }
-
-        private void btnShots_Click(object sender, EventArgs e)
-        {
-            txtAlcoholContent.Text = "40% ABV";
-        }
-
-        private void btnMixedDrinks_Click(object sender, EventArgs e)
-        {
-            txtAlcoholContent.Text = "13% ABV";
         }*/
     public static void main(String[] args) {
         Person drinker = new Person();

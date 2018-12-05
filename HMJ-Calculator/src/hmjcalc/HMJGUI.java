@@ -386,15 +386,13 @@ else {
 //        boolean isLegal;
         double numberOfDrinks;
 //        isLegal = user.areYouLegal();
-        Object o = jsAge.getValue(); //converts age spinner value into usable number
-        Number n = (Number) o;
-        int i = n.intValue();
-        if (i >= 18) { //should work with the textbox or display in JPanel
+        int n = Integer.parseInt(jsAge.getValue().toString()); //converts age spinner value into usable number
+        
+        if (n >= 21) { //should work with the textbox or display in JPanel
             numberOfDrinks = user.howManyShouldIDrink();
-
-            jtaHMSID.append("you should have " + numberOfDrinks + " drinks");
+            jtaHMSID.setText("You should have " + numberOfDrinks + " Drinks");
         } else {
-            jtaHMSID.append("you are not old enough to drink. Try again later");
+            jtaHMSID.setText("You are not old enough to drink. Try again later");
         }
         
     }//GEN-LAST:event_jlHMSIDActionPerformed
