@@ -50,18 +50,19 @@ public class Person {
         double scale = Math.pow(10, places);
         return Math.round(value * scale) / scale;
     }
+
     public double howManyShouldIDrink() {
-        double BAC = 0.0;
+        //currently this does not take the ABV of drinks into account AT ALL
+        Double BAC = 0.0;
         double numOfDrinks, r; //r is gender constant
-        double y = Person.weight; //weight in grams
+        double y = getWeight(); //weight in grams
         
-        if (Person.sex == true) {
+        if (getSex() == true)
             r = 0.55;
-        } else {
+        else
             r = 0.68;
-        }
         
-        switch (dDrunk) { //switches make if/else much easier: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/switch.html
+        switch (getDDrunk()) { //switches make if/else much easier: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/switch.html
             case 1: BAC = 0.02;
                 break;
             case 2: BAC = 0.04;
@@ -85,13 +86,13 @@ public class Person {
             default:
                 break;
         }
-        double BACWithTime = BAC - (Person.howLongDrinking * 0.015);
+        double BACWithTime = 0.35 - (gethLD() * 0.015);
         numOfDrinks = (((BACWithTime / 100 ) * (y * r)) / 14);
         return roundAvoid(numOfDrinks,2);
     }
     
     public boolean areYouLegal() {
-        if (Person.age >= 21) {
+        if (getAge() >= 21) {
             return true;
         } else {
             return false;

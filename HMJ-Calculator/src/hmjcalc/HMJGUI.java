@@ -39,10 +39,11 @@ public class HMJGUI extends javax.swing.JFrame {
     public HMJGUI() {
         initComponents();
         user = new Person();
-        /*GetMostRecent20HomeTimeLine();
-        jta5Oclock.setText(null);
-        currentTweets.ForEach(tweet =>
-        jta5Oclock.append(tweet.Text));*/
+        String places[] = {"Sydney, Australia", "Canberra, Australia", "Magadan, Russia", "Chersky, Russia"};
+        //places[] will later need to hold values of things from the SQL database
+        for (int i=0; i<4; i++) {
+            jta5Oclock.append(places[i] + "\n");
+        }
     }
     
     /*private void GetMostRecent20HomeTimeLine() {
@@ -68,18 +69,18 @@ public class HMJGUI extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jlSex = new javax.swing.JLabel();
         jlAge = new javax.swing.JLabel();
-        jcboSex = new javax.swing.JComboBox<String>();
+        jcboSex = new javax.swing.JComboBox<>();
         jlLanguage = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jsAge = new javax.swing.JSpinner();
         jlWeight = new javax.swing.JLabel();
         jsWeight = new javax.swing.JSpinner();
         jlDesired = new javax.swing.JLabel();
         jlDuration = new javax.swing.JLabel();
-        jcboDuration = new javax.swing.JComboBox<String>();
+        jcboDuration = new javax.swing.JComboBox<>();
         jlTitle = new javax.swing.JLabel();
-        jcboDesired = new javax.swing.JComboBox<String>();
-        jcboBar = new javax.swing.JComboBox<String>();
+        jcboDesired = new javax.swing.JComboBox<>();
+        jcboBar = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jlBarInfo = new javax.swing.JLabel();
         jlBar = new javax.swing.JLabel();
@@ -106,13 +107,13 @@ public class HMJGUI extends javax.swing.JFrame {
         jlAge.setText("Age: ");
 
         jcboSex.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Male", "Female" }));
+        jcboSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
 
         jlLanguage.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlLanguage.setText("Language:");
 
         jComboBox1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "English", "Spanish", "Chinese" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "English", "Spanish", "Chinese" }));
 
         jsAge.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
 
@@ -124,16 +125,16 @@ public class HMJGUI extends javax.swing.JFrame {
         jlDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlDesired.setText("Desired Level of Drunkenness: ");
 
-        jlDuration.setText("Duration:");
+        jlDuration.setText("Duration (in hours):");
 
         jcboDuration.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboDuration.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ".5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8" }));
+        jcboDuration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8" }));
 
         jlTitle.setFont(new java.awt.Font("Verdana", 3, 36)); // NOI18N
         jlTitle.setText("How Many Jrinks?");
 
         jcboDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         jcboDesired.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcboDesiredActionPerformed(evt);
@@ -141,8 +142,9 @@ public class HMJGUI extends javax.swing.JFrame {
         });
 
         jcboBar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboBar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
+        jcboBar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
 
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel1.setText("It's 5 O'clock somewhere!");
 
         jlBarInfo.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -175,6 +177,7 @@ public class HMJGUI extends javax.swing.JFrame {
         });
 
         jlHMSID.setText("How Many Should I Drink?");
+        jlHMSID.setEnabled(false);
         jlHMSID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jlHMSIDActionPerformed(evt);
@@ -182,6 +185,7 @@ public class HMJGUI extends javax.swing.JFrame {
         });
 
         jtaHMSID.setColumns(20);
+        jtaHMSID.setLineWrap(true);
         jtaHMSID.setRows(5);
         jScrollPane1.setViewportView(jtaHMSID);
 
@@ -189,11 +193,19 @@ public class HMJGUI extends javax.swing.JFrame {
         jtaAContent.setRows(5);
         jScrollPane2.setViewportView(jtaAContent);
 
+        jta5Oclock.setEditable(false);
         jta5Oclock.setColumns(20);
+        jta5Oclock.setLineWrap(true);
         jta5Oclock.setRows(5);
         jScrollPane4.setViewportView(jta5Oclock);
 
+        jComboBox2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Beer", "Wine", "Shot", "Mixed Drink" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,17 +358,17 @@ public class HMJGUI extends javax.swing.JFrame {
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         Boolean isMale;
-if (jcboSex.getSelectedItem().toString().equals("Male")) { 
-    isMale = true; 
-}
-else { 
-    isMale = false; 
-}
-    user.setSex(isMale);
-    user.setAge(Integer.parseInt(jsAge.getValue().toString()));
-    user.setWeight(Integer.parseInt(jsWeight.getValue().toString()));
-    user.sethLD(Double.parseDouble(jcboDuration.getSelectedItem().toString()));
-    user.setDDrunk(Integer.parseInt(jcboDesired.getSelectedItem().toString()));
+        isMale = jcboSex.getSelectedItem().toString().equals("Male");
+        Person.setSex(isMale);
+        //Below is just a silly test
+        /*if (!Person.getSex()) {
+            System.out.println("Aaah! Female!");
+        }*/
+        Person.setAge(Integer.parseInt(jsAge.getValue().toString()));
+        Person.setWeight(Integer.parseInt(jsWeight.getValue().toString()));
+        Person.sethLD(Double.parseDouble(jcboDuration.getSelectedItem().toString()));
+        Person.setDDrunk(Integer.parseInt(jcboDesired.getSelectedItem().toString()));
+        jlHMSID.setEnabled(true);
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
     private void jbtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearActionPerformed
@@ -371,24 +383,11 @@ else {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcboDesiredActionPerformed
     private void jcboBox2TextDisplay(){ //prints ABV for a few drinks for display purposes
-        if (jComboBox2.getSelectedItem().toString().equals("Beer")){
-            jtaAContent.append("4.5% ABV");
-        } else if (jComboBox2.getSelectedItem().toString().equals("Wine")) {
-            jtaAContent.append("12% ABV");
-        } else if (jComboBox2.getSelectedItem().toString().equals("Shot")) {
-            jtaAContent.append("40% ABV");
-        } else if (jComboBox2.getSelectedItem().toString().equals("Mixed Drink")) {
-            jtaAContent.append("13% ABV");
-        }
+        //remove this
     }
     private void jlHMSIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlHMSIDActionPerformed
-        // TODO add your handling code here:
-//        boolean isLegal;
         double numberOfDrinks;
-//        isLegal = user.areYouLegal();
-        int n = Integer.parseInt(jsAge.getValue().toString()); //converts age spinner value into usable number
-        
-        if (n >= 21) { //should work with the textbox or display in JPanel
+        if (Person.getAge() >= 21) { //should work with the textbox or display in JPanel
             numberOfDrinks = user.howManyShouldIDrink();
             jtaHMSID.setText("You should have " + numberOfDrinks + " Drinks");
         } else {
@@ -396,6 +395,17 @@ else {
         }
         
     }//GEN-LAST:event_jlHMSIDActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        if (jComboBox2.getSelectedItem().toString().equals("Beer")){
+            jtaAContent.setText("4.5% ABV");
+        } else if (jComboBox2.getSelectedItem().toString().equals("Wine")) {
+            jtaAContent.setText("12% ABV");
+        } else if (jComboBox2.getSelectedItem().toString().equals("Shot")) {
+            jtaAContent.setText("40% ABV");
+        } else if (jComboBox2.getSelectedItem().toString().equals("Mixed Drink")) {
+            jtaAContent.setText("13% ABV");
+        }    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
