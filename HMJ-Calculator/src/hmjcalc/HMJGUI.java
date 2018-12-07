@@ -7,6 +7,11 @@ package hmjcalc;
 
 import hmjcalc.objects.Person;
 import java.util.*;
+import java.awt.FlowLayout;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+
 //will need to import API stuff here
 
 /**
@@ -34,10 +39,11 @@ public class HMJGUI extends javax.swing.JFrame {
     public HMJGUI() {
         initComponents();
         user = new Person();
-        /*GetMostRecent20HomeTimeLine();
-        jta5Oclock.setText(null);
-        currentTweets.ForEach(tweet =>
-        jta5Oclock.append(tweet.Text));*/
+        String places[] = {"Sydney, Australia", "Canberra, Australia", "Magadan, Russia", "Chersky, Russia"};
+        //places[] will later need to hold values of things from the SQL database
+        for (int i=0; i<4; i++) {
+            jta5Oclock.append(places[i] + "\n");
+        }
     }
     
     /*private void GetMostRecent20HomeTimeLine() {
@@ -90,8 +96,7 @@ public class HMJGUI extends javax.swing.JFrame {
         jtaAContent = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         jta5Oclock = new javax.swing.JTextArea();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jComboBox2 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,7 +125,7 @@ public class HMJGUI extends javax.swing.JFrame {
         jlDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlDesired.setText("Desired Level of Drunkenness: ");
 
-        jlDuration.setText("Duration:");
+        jlDuration.setText("Duration (in hours):");
 
         jcboDuration.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboDuration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8" }));
@@ -129,11 +134,17 @@ public class HMJGUI extends javax.swing.JFrame {
         jlTitle.setText("How Many Jrinks?");
 
         jcboDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - Social", "2 - Witty & Charming", "3 - Buzzed", "4 - Patriotic", "5 - Tipsy", "6 - Horny", "7 - Sloppy", "8 - Reckless ", "9 - Train Wreck", "10 - Dead" }));
+        jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        jcboDesired.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcboDesiredActionPerformed(evt);
+            }
+        });
 
         jcboBar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboBar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
 
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel1.setText("It's 5 O'clock somewhere!");
 
         jlBarInfo.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -166,8 +177,15 @@ public class HMJGUI extends javax.swing.JFrame {
         });
 
         jlHMSID.setText("How Many Should I Drink?");
+        jlHMSID.setEnabled(false);
+        jlHMSID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jlHMSIDActionPerformed(evt);
+            }
+        });
 
         jtaHMSID.setColumns(20);
+        jtaHMSID.setLineWrap(true);
         jtaHMSID.setRows(5);
         jScrollPane1.setViewportView(jtaHMSID);
 
@@ -175,16 +193,19 @@ public class HMJGUI extends javax.swing.JFrame {
         jtaAContent.setRows(5);
         jScrollPane2.setViewportView(jtaAContent);
 
+        jta5Oclock.setEditable(false);
         jta5Oclock.setColumns(20);
+        jta5Oclock.setLineWrap(true);
         jta5Oclock.setRows(5);
         jScrollPane4.setViewportView(jta5Oclock);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        jComboBox2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Beer", "Wine", "Shot", "Mixed Drink" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
         });
-        jScrollPane5.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,9 +240,9 @@ public class HMJGUI extends javax.swing.JFrame {
                                             .addComponent(jlWeight)
                                             .addComponent(jlAge))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jsAge, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jsWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jsWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                                            .addComponent(jsAge)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jlSex)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -241,8 +262,8 @@ public class HMJGUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlDrinks)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(41, 41, 41)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(88, 88, 88)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlAContent, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -308,11 +329,10 @@ public class HMJGUI extends javax.swing.JFrame {
                     .addComponent(jlAContent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -338,13 +358,17 @@ public class HMJGUI extends javax.swing.JFrame {
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         Boolean isMale;
-        if (jcboSex.getSelectedItem().toString().equals("Male")) { isMale = true; }
-        else { isMale = false; }
-        user.setSex(isMale);
-        user.setAge((Integer)jsAge.getValue());
-        user.setWeight((Integer)jsWeight.getValue());
-        user.sethLD((Double)jcboDuration.getSelectedItem());
-        user.setDDrunk((Integer)jcboDesired.getSelectedItem());
+        isMale = jcboSex.getSelectedItem().toString().equals("Male");
+        Person.setSex(isMale);
+        //Below is just a silly test
+        /*if (!Person.getSex()) {
+            System.out.println("Aaah! Female!");
+        }*/
+        Person.setAge(Integer.parseInt(jsAge.getValue().toString()));
+        Person.setWeight(Integer.parseInt(jsWeight.getValue().toString()));
+        Person.sethLD(Double.parseDouble(jcboDuration.getSelectedItem().toString()));
+        Person.setDDrunk(Integer.parseInt(jcboDesired.getSelectedItem().toString()));
+        jlHMSID.setEnabled(true);
     }//GEN-LAST:event_jbtnSaveActionPerformed
 
     private void jbtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearActionPerformed
@@ -352,8 +376,36 @@ public class HMJGUI extends javax.swing.JFrame {
         jsAge.setValue(0);
         jsWeight.setValue(0);
         jcboDuration.setSelectedItem(0.5);
-        jcboDesired.setSelectedItem("1 - Social");
+        jcboDesired.setSelectedItem("1");
     }//GEN-LAST:event_jbtnClearActionPerformed
+
+    private void jcboDesiredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDesiredActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcboDesiredActionPerformed
+    private void jcboBox2TextDisplay(){ //prints ABV for a few drinks for display purposes
+        //remove this
+    }
+    private void jlHMSIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlHMSIDActionPerformed
+        double numberOfDrinks;
+        if (Person.getAge() >= 21) { //should work with the textbox or display in JPanel
+            numberOfDrinks = user.howManyShouldIDrink();
+            jtaHMSID.setText("You should have " + numberOfDrinks + " Drinks");
+        } else {
+            jtaHMSID.setText("You are not old enough to drink. Try again later");
+        }
+        
+    }//GEN-LAST:event_jlHMSIDActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        if (jComboBox2.getSelectedItem().toString().equals("Beer")){
+            jtaAContent.setText("4.5% ABV");
+        } else if (jComboBox2.getSelectedItem().toString().equals("Wine")) {
+            jtaAContent.setText("12% ABV");
+        } else if (jComboBox2.getSelectedItem().toString().equals("Shot")) {
+            jtaAContent.setText("40% ABV");
+        } else if (jComboBox2.getSelectedItem().toString().equals("Mixed Drink")) {
+            jtaAContent.setText("13% ABV");
+        }    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,12 +444,11 @@ public class HMJGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton jbtnClear;
