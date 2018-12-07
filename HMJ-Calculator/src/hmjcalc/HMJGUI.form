@@ -58,7 +58,7 @@
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jsWeight" pref="55" max="32767" attributes="0"/>
+                                          <Component id="jsWeight" max="32767" attributes="0"/>
                                           <Component id="jsAge" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -84,17 +84,6 @@
                               <Component id="jcboBar" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlDrinks" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jComboBox2" min="-2" pref="283" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlAContent" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane2" alignment="0" min="-2" pref="196" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jbtnClear" min="-2" max="-2" attributes="0"/>
@@ -108,6 +97,21 @@
                               </Group>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="260" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jlDrinks" max="32767" attributes="0"/>
+                                  <Component id="jcboDrinks" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jcboDrinksSub" min="-2" pref="181" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jScrollPane2" min="-2" pref="196" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jlAContent" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -171,16 +175,19 @@
                   <Component id="jcboBar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jlDrinks" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jlAContent" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlDrinks" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlAContent" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" min="-2" pref="63" max="-2" attributes="0"/>
-                  <Component id="jComboBox2" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jcboDrinks" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="jcboDrinksSub" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -368,30 +375,12 @@
           <Font name="Comic Sans MS" size="11" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="20">
-            <StringItem index="0" value="Harry&apos;s"/>
-            <StringItem index="1" value="Brother&apos;s Bar &amp; Grill"/>
-            <StringItem index="2" value="Neon Cactus"/>
-            <StringItem index="3" value="Hunters Pub"/>
-            <StringItem index="4" value="The Pint"/>
-            <StringItem index="5" value="Klondike Pub"/>
-            <StringItem index="6" value="Nine Irish Brothers"/>
-            <StringItem index="7" value="Stacked Pickle"/>
-            <StringItem index="8" value="Echo Karaoke"/>
-            <StringItem index="9" value="308 On State"/>
-            <StringItem index="10" value="Scotty&apos;s Brewhouse"/>
-            <StringItem index="11" value="Knickerbocker Saloon"/>
-            <StringItem index="12" value="Black Sparrow"/>
-            <StringItem index="13" value="Double Deuce Saloon"/>
-            <StringItem index="14" value="Local Bar"/>
-            <StringItem index="15" value="Sgt Preston&apos;s of the North"/>
-            <StringItem index="16" value="RedSeven Bar &amp; Grill"/>
-            <StringItem index="17" value="Lafayette Brewing Company"/>
-            <StringItem index="18" value="DT Kirby&apos;s"/>
-            <StringItem index="19" value="Blind Pig"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboBarActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -523,22 +512,39 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JComboBox" name="jComboBox2">
+    <Component class="javax.swing.JComboBox" name="jcboDrinks">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Comic Sans MS" size="11" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Beer"/>
-            <StringItem index="1" value="Wine"/>
-            <StringItem index="2" value="Shot"/>
-            <StringItem index="3" value="Mixed Drink"/>
+          <StringArray count="7">
+            <StringItem index="0" value="All Drinks"/>
+            <StringItem index="1" value="Beer"/>
+            <StringItem index="2" value="Wine"/>
+            <StringItem index="3" value="Shot"/>
+            <StringItem index="4" value="All Mixed Drinks"/>
+            <StringItem index="5" value="Well Drink"/>
+            <StringItem index="6" value="Specialty Drink"/>
           </StringArray>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboDrinksActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jcboDrinksSub">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Comic Sans MS" size="11" style="0"/>
+        </Property>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcboDrinksSubActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

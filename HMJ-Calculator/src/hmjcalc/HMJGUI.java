@@ -5,15 +5,18 @@
  */
 package hmjcalc;
 
+import hmjcalc.objects.Drink;
 import hmjcalc.objects.Person;
+import static hmjcalc.sqlTools.printSQLException;
 import java.util.*;
 import java.awt.FlowLayout;
+import java.sql.*;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 //will need to import API stuff here
-
 /**
  *
  * @author Harrison, Alex
@@ -23,39 +26,71 @@ import javax.swing.JScrollPane;
  * jcboDuration may be changed to jsDuration (into a spinner), but we need to find a way to limit the number
  */
 public class HMJGUI extends javax.swing.JFrame {
-    private Person user = null;
 
+    private Person user = null;
+    //Locale information; may be deleted later on
     Locale usEnglish = Locale.forLanguageTag("en-US");
     Locale mxSpanish = Locale.forLanguageTag("es-MX");
     Locale chChinese = Locale.forLanguageTag("zh-CN");
-
     //String getdisplayLanguage(Locale usEnglish);
+
+    //Lists for the SQL drink fields
+    List<String> drinkNames = new ArrayList<>();
+    List<String> drinkAbvs = new ArrayList<>();
+    List<String> drinkVols = new ArrayList<>();
+    List<String> bars = new ArrayList<>();
+    //Connection conn = null; //leave null until we build our database
+    //Go here for help: https://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html#db_connection_url
+
     /**
      * Creates new form HMJGUI
+     *
      */
-    //the <Status> part requires LinqToTwitter
-    //We will need a new API to get the Twitter information, since LinqToTwitter only works with C#
-    //private List<Status> currentTweets;
     public HMJGUI() {
         initComponents();
         user = new Person();
         String places[] = {"Sydney, Australia", "Canberra, Australia", "Magadan, Russia", "Chersky, Russia"};
         //places[] will later need to hold values of things from the SQL database
-        for (int i=0; i<4; i++) {
+        for (int i = 0; i < 4; i++) {
             jta5Oclock.append(places[i] + "\n");
         }
+        String bars[] = {"Harry's"
+            , "Brother's Bar & Grill", "Neon Cactus",
+            "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers",
+            "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse",
+            "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar",
+            "Sgt Preston's of the North", "RedSeven Bar & Grill",
+            "Lafayette Brewing Company", "DT Kirby's", "Blind Pig"};
     }
-    
-    /*private void GetMostRecent20HomeTimeLine() {
-            var twitterContext = new TwitterContext(authorizer);
 
-            var tweets = from tweet in twitterContext.Status
-                         where tweet.Type == StatusType.Home &&
-                         tweet.Count == 20
-                         select tweet;
+    //FOR USE WITH THE JDBC/SQL DATABASE; HAS NOT BEEN TESTED
+    //REF: https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
+    public void viewTable(Connection con, String drinkSID)
+            throws SQLException {
 
-            currentTweets = tweets.ToList();
-    }*/
+        Statement stmt = null;
+        //NOTE: dbName is a placeholder for whatever our database is going to be called
+        String query = "SELECT DrinkName, DrinkAbv, Volume FROM dbName.DRINK"
+                + "WHERE DrinkID=" + drinkSID;
+        try {
+            drinkNames.clear();
+            drinkAbvs.clear();
+            drinkVols.clear();
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                drinkNames.add(rs.getString("DrinkName"));
+                drinkAbvs.add(rs.getString("DrinkAbv"));
+                drinkVols.add(rs.getString("Volume"));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,7 +131,8 @@ public class HMJGUI extends javax.swing.JFrame {
         jtaAContent = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         jta5Oclock = new javax.swing.JTextArea();
-        jComboBox2 = new javax.swing.JComboBox();
+        jcboDrinks = new javax.swing.JComboBox();
+        jcboDrinksSub = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,7 +172,6 @@ public class HMJGUI extends javax.swing.JFrame {
 
         jcboDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
-
         jcboDesired.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcboDesiredActionPerformed(evt);
@@ -144,8 +179,11 @@ public class HMJGUI extends javax.swing.JFrame {
         });
 
         jcboBar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jcboBar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
-
+        jcboBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcboBarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel1.setText("It's 5 O'clock somewhere!");
@@ -205,11 +243,19 @@ public class HMJGUI extends javax.swing.JFrame {
         jta5Oclock.setRows(5);
         jScrollPane4.setViewportView(jta5Oclock);
 
-        jComboBox2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Beer", "Wine", "Shot", "Mixed Drink" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        jcboDrinks.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jcboDrinks.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All Drinks", "Beer", "Wine", "Shot", "All Mixed Drinks", "Well Drink", "Specialty Drink" }));
+        jcboDrinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jcboDrinksActionPerformed(evt);
+            }
+        });
+
+        jcboDrinksSub.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jcboDrinksSub.setEnabled(false);
+        jcboDrinksSub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcboDrinksSubActionPerformed(evt);
             }
         });
 
@@ -247,7 +293,7 @@ public class HMJGUI extends javax.swing.JFrame {
                                             .addComponent(jlAge))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jsWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                                            .addComponent(jsWeight)
                                             .addComponent(jsAge)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jlSex)
@@ -266,14 +312,6 @@ public class HMJGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcboBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlDrinks)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(88, 88, 88)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlAContent, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jbtnClear)
@@ -283,7 +321,18 @@ public class HMJGUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jlHMSID, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(28, 28, 28)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jlDrinks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jcboDrinks, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jcboDrinksSub, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jlAContent))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -330,14 +379,16 @@ public class HMJGUI extends javax.swing.JFrame {
                     .addComponent(jlBar)
                     .addComponent(jcboBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlDrinks, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlDrinks)
                     .addComponent(jlAContent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jcboDrinks, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcboDrinksSub, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,10 +417,6 @@ public class HMJGUI extends javax.swing.JFrame {
         Boolean isMale;
         isMale = jcboSex.getSelectedItem().toString().equals("Male");
         Person.setSex(isMale);
-        //Below is just a silly test
-        /*if (!Person.getSex()) {
-            System.out.println("Aaah! Female!");
-        }*/
         Person.setAge(Integer.parseInt(jsAge.getValue().toString()));
         Person.setWeight(Integer.parseInt(jsWeight.getValue().toString()));
         Person.sethLD(Double.parseDouble(jcboDuration.getSelectedItem().toString()));
@@ -388,7 +435,7 @@ public class HMJGUI extends javax.swing.JFrame {
     private void jcboDesiredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDesiredActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcboDesiredActionPerformed
-    private void jcboBox2TextDisplay(){ //prints ABV for a few drinks for display purposes
+    private void jcboBox2TextDisplay() { //prints ABV for a few drinks for display purposes
         //remove this
     }
     private void jlHMSIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlHMSIDActionPerformed
@@ -399,19 +446,50 @@ public class HMJGUI extends javax.swing.JFrame {
         } else {
             jtaHMSID.setText("You are not old enough to drink. Try again later");
         }
-        
+
     }//GEN-LAST:event_jlHMSIDActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        if (jComboBox2.getSelectedItem().toString().equals("Beer")){
-            jtaAContent.setText("4.5% ABV");
-        } else if (jComboBox2.getSelectedItem().toString().equals("Wine")) {
+    private void jcboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDrinksActionPerformed
+        /*Want to see if there's a way to dynamically load these options with
+        * the JDBC information...
+        * I feel like a for loop would be able to do it...or maybe allow for something
+        * kind of like this:
+            * ResultSet drinkset = stmt.executeQuery(SELECT DrinkName, DrinkAbv, Volume FROM DRINK WHERE DrinkID = 1);
+         */
+        ResultSet drinkset;
+        //These will now load submenus for different kinds of beer, wine, etc.
+        if (jcboDrinks.getSelectedItem().toString().equals("All")) {
+            //calling viewtable here will just require a try-catch
+            //viewTable(conn, "1");
+            DefaultComboBoxModel dModel = new DefaultComboBoxModel(drinkNames.toArray());
+            jcboDrinksSub.setModel(dModel);
+        } else if (jcboDrinks.getSelectedItem().toString().equals("Wine")) {
             jtaAContent.setText("12% ABV");
-        } else if (jComboBox2.getSelectedItem().toString().equals("Shot")) {
+            Drink.setAC(0.12);
+        } else if (jcboDrinks.getSelectedItem().toString().equals("Shot")) {
             jtaAContent.setText("40% ABV");
-        } else if (jComboBox2.getSelectedItem().toString().equals("Mixed Drink")) {
+            Drink.setAC(0.4);
+        } else if (jcboDrinks.getSelectedItem().toString().equals("All Mixed Drinks")) {
             jtaAContent.setText("13% ABV");
-        }    }//GEN-LAST:event_jComboBox2ActionPerformed
+            Drink.setAC(0.13);
+        }    }//GEN-LAST:event_jcboDrinksActionPerformed
+
+    private void jcboBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboBarActionPerformed
+        //bars' menus will be defined here
+        int counter = 0;
+        /*for (int i = 0; i < bars.size(); i++) {
+            if (bars<i> != null) {
+                counter++;
+            }
+        }
+        String drinks[] = {"Beer", "Wine", "Shot", "Mixed Drink"};
+        DefaultComboBoxModel model2 = new DefaultComboBoxModel( drinks );
+        jcboDrinks.setModel( model2 );*/
+    }//GEN-LAST:event_jcboBarActionPerformed
+
+    private void jcboDrinksSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDrinksSubActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcboDrinksSubActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,7 +528,6 @@ public class HMJGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -461,6 +538,8 @@ public class HMJGUI extends javax.swing.JFrame {
     private javax.swing.JButton jbtnSave;
     private javax.swing.JComboBox<String> jcboBar;
     private javax.swing.JComboBox<String> jcboDesired;
+    private javax.swing.JComboBox jcboDrinks;
+    private javax.swing.JComboBox jcboDrinksSub;
     private javax.swing.JComboBox<String> jcboDuration;
     private javax.swing.JComboBox<String> jcboSex;
     private javax.swing.JLabel jlAContent;
