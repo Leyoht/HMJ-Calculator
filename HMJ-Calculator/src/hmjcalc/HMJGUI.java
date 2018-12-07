@@ -125,6 +125,7 @@ public class HMJGUI extends javax.swing.JFrame {
         jlDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlDesired.setText("Desired Level of Drunkenness: ");
 
+        jlDuration.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jlDuration.setText("Duration (in hours):");
 
         jcboDuration.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
@@ -135,6 +136,7 @@ public class HMJGUI extends javax.swing.JFrame {
 
         jcboDesired.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboDesired.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+
         jcboDesired.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcboDesiredActionPerformed(evt);
@@ -143,6 +145,7 @@ public class HMJGUI extends javax.swing.JFrame {
 
         jcboBar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jcboBar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Harry's", "Brother's Bar & Grill", "Neon Cactus", "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers", "Stacked Pickle", "Echo Karaoke", "308 On State", "Scotty's Brewhouse", "Knickerbocker Saloon", "Black Sparrow", "Double Deuce Saloon", "Local Bar", "Sgt Preston's of the North", "RedSeven Bar & Grill", "Lafayette Brewing Company", "DT Kirby's", "Blind Pig" }));
+
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel1.setText("It's 5 O'clock somewhere!");
@@ -160,6 +163,7 @@ public class HMJGUI extends javax.swing.JFrame {
         jlAContent.setText("Alcohol Content");
         jlAContent.setToolTipText("");
 
+        jbtnSave.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         jbtnSave.setText("Save");
         jbtnSave.setToolTipText("");
         jbtnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -168,6 +172,7 @@ public class HMJGUI extends javax.swing.JFrame {
             }
         });
 
+        jbtnClear.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
         jbtnClear.setText("Clear");
         jbtnClear.setToolTipText("");
         jbtnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +181,7 @@ public class HMJGUI extends javax.swing.JFrame {
             }
         });
 
+        jlHMSID.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         jlHMSID.setText("How Many Should I Drink?");
         jlHMSID.setEnabled(false);
         jlHMSID.addActionListener(new java.awt.event.ActionListener() {
@@ -355,7 +361,7 @@ public class HMJGUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    //maybe we should make a "Load" button to get information from the Person class when 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         Boolean isMale;
         isMale = jcboSex.getSelectedItem().toString().equals("Male");
