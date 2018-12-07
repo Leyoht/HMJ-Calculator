@@ -1,11 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* === NOTES ===
+ * jcboDuration may be changed to jsDuration (into a spinner), but we need to find a way to limit the number
+
+ * === HELPFUL LINKS ===
+ * https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
+ * https://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html#db_connection_url
+ * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/switch.html
  */
 package hmjcalc;
 
-import hmjcalc.objects.Drink;
+//import hmjcalc.objects.Drink;
 import hmjcalc.objects.Person;
 import static hmjcalc.sqlTools.printSQLException;
 import java.util.*;
@@ -14,9 +17,6 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 //will need to import API stuff here
 /**
@@ -24,11 +24,7 @@ import javax.swing.JScrollPane;
  * @author Harrison, Alex
  */
 
-/* === NOTES ===
- * jcboDuration may be changed to jsDuration (into a spinner), but we need to find a way to limit the number
- */
 public class HMJGUI extends javax.swing.JFrame {
-
     private Person user = null;
     //Locale information; may be deleted later on
     Locale usEnglish = Locale.forLanguageTag("en-US");
@@ -47,7 +43,6 @@ public class HMJGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form HMJGUI
-     *
      */
     public HMJGUI() {
         initComponents();
@@ -70,13 +65,13 @@ public class HMJGUI extends javax.swing.JFrame {
 
     //FOR USE WITH THE JDBC/SQL DATABASE; HAS NOT BEEN TESTED
     //REF: https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
-    public void viewTable(Connection con, String drinkSID)
+    public void getDrinks(Connection con, String tableName, String idName, String drinkSID)
             throws SQLException {
 
         Statement stmt = null;
         //NOTE: dbName is a placeholder for whatever our database is going to be called
-        String query = "SELECT DrinkName, DrinkAbv, Volume FROM dbName.DRINK"
-                + "WHERE DrinkID=" + drinkSID;
+        String query = "SELECT DrinkName, DrinkAbv, Volume FROM dbName." + tableName
+                + " WHERE" + idName + "=" + drinkSID;
         try {
             drinkNames.clear();
             drinkAbvs.clear();
@@ -455,23 +450,8 @@ public class HMJGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jlHMSIDActionPerformed
 
     private void jcboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDrinksActionPerformed
-        /*Want to see if there's a way to dynamically load these options with
-        * the JDBC information...
-        * I feel like a for loop would be able to do it...or maybe allow for something
-        * kind of like this:
-            * ResultSet drinkset = stmt.executeQuery(SELECT DrinkName, DrinkAbv, Volume FROM DRINK WHERE DrinkID = 1);
-         */
         jcboDrinksSub.setEnabled(true);
         ResultSet drinkset;
-        /* These will now load submenus for the following:
-        All Drinks
-        Beer
-        Wine
-        Shot
-        All Mixed Drinks
-        //THESE TWO WILL NEED TO BE HANDLED A LITTLE DIFFERENT
-        Well Drink
-        Specialty Drink*/
         //MOST OF THESE WILL THROW ERRORS BECAUSE THE DATABASE HAS NOT BEEN BUILT YET
         switch (jcboDrinks.getSelectedItem().toString()) {
             case "All Drinks":
@@ -481,7 +461,7 @@ public class HMJGUI extends javax.swing.JFrame {
                 break;
             case "Beer":
                 try {
-                    viewTable(conn, "1");
+                    getDrinks(conn, "Drink", "DrinkID", "1");
                     dModel = new DefaultComboBoxModel(drinkNames.toArray());
                     jcboDrinksSub.setModel(dModel);
                 } catch (SQLException ex) {
@@ -490,7 +470,7 @@ public class HMJGUI extends javax.swing.JFrame {
                 break;
             case "Wine":
                 try {
-                    viewTable(conn, "2");
+                    getDrinks(conn, "Drink", "DrinkID", "2");
                     dModel = new DefaultComboBoxModel(drinkNames.toArray());
                     jcboDrinksSub.setModel(dModel);
                     /*THE FOLLOWING BELOW IS FOR jboDrinksSub TO DEAL WITH
@@ -502,7 +482,7 @@ public class HMJGUI extends javax.swing.JFrame {
                 break;
             case "Hard Liquor":
                 try {
-                    viewTable(conn, "3");
+                    getDrinks(conn, "Drink", "DrinkID", "3");
                     dModel = new DefaultComboBoxModel(drinkNames.toArray());
                     jcboDrinksSub.setModel(dModel);
                     /*jtaAContent.setText("40% ABV");
@@ -513,11 +493,29 @@ public class HMJGUI extends javax.swing.JFrame {
                 break;
             case "All Mixed Drinks":
                 try {
-                    viewTable(conn, "4");
+                    getDrinks(conn, "Drink", "DrinkID", "4");
                     dModel = new DefaultComboBoxModel(drinkNames.toArray());
                     jcboDrinksSub.setModel(dModel);
                     /*jtaAContent.setText("13% ABV");
                     Drink.setAC(0.13);*/
+                } catch (SQLException ex) {
+                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            //TYPES OF MIX DRINKS DECLARED BELOW
+            //NOTE THAT THE ID NUMBERS MAY CHANGE
+            case "Well Drink":
+                try {
+                    getDrinks(conn, "WELL_DRINK", "MixID", "1");
+                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
+                    jcboDrinksSub.setModel(dModel);
+                } catch (SQLException ex) {
+                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            case "Specialty Drink":
+                try {
+                    getDrinks(conn, "WELL_DRINK", "MixID", "2");
+                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
+                    jcboDrinksSub.setModel(dModel);
                 } catch (SQLException ex) {
                     Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -537,7 +535,19 @@ public class HMJGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jcboBarActionPerformed
 
     private void jcboDrinksSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDrinksSubActionPerformed
-        // TODO add your handling code here:
+        /*Want to see if there's a way to dynamically load these options with
+        * the JDBC information...
+        * I feel like a for loop would be able to do it...or maybe allow for something
+        * kind of like this:
+            * ResultSet drinkset = stmt.executeQuery(SELECT DrinkName, DrinkAbv, Volume FROM DRINK WHERE DrinkID = 1);
+        =================================
+        The drinkNames list has already been loaded into this area comboBox
+        Now we need to make it so that when somebody selects something in jcboDrinksSub,
+        the name of the drink is recognized as being affiliated with an ID and
+        that ID is affiliated to the relevant Alcohol content and volume.
+            With that said, we may need to make a list for IDs, but only do this as a last resort
+        */
+        
     }//GEN-LAST:event_jcboDrinksSubActionPerformed
 
     /**
