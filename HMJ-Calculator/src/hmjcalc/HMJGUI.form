@@ -522,7 +522,7 @@
             <StringItem index="0" value="All Drinks"/>
             <StringItem index="1" value="Beer"/>
             <StringItem index="2" value="Wine"/>
-            <StringItem index="3" value="Shot"/>
+            <StringItem index="3" value="Hard Liquor"/>
             <StringItem index="4" value="All Mixed Drinks"/>
             <StringItem index="5" value="Well Drink"/>
             <StringItem index="6" value="Specialty Drink"/>
