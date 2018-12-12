@@ -23,8 +23,8 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Harrison, Alex
  */
-
 public class HMJGUI extends javax.swing.JFrame {
+
     private Person user = null;
     //Locale information; may be deleted later on
     Locale usEnglish = Locale.forLanguageTag("en-US");
@@ -47,11 +47,21 @@ public class HMJGUI extends javax.swing.JFrame {
     public HMJGUI() {
         initComponents();
         user = new Person();
-        String places[] = {"Sydney, Australia", "Canberra, Australia", "Magadan, Russia", "Chersky, Russia"};
-        //places[] will later need to hold values of things from the SQL database
-        for (int i = 0; i < 4; i++) {
-            jta5Oclock.append(places[i] + "\n");
+
+        timeHandler th = new timeHandler();
+        th.main(); //we need to run the main method somehow
+        //Maybe look here: https://stackoverflow.com/questions/24770094/calling-a-class-from-another-class-with-main-method
+        String zoneNames[] = null;
+        for (int i = 0; i < th.getZoneNames().size(); i++) {
+            long num = Long.parseLong(th.getTimeStamps().toString());
+            java.util.Date time = new java.util.Date((long) num * 1000);
+            String hour = time.toString().substring(11, 13);
+            //if (hour.equals("17")) {
+                jta5Oclock.append(Arrays.toString(th.getZoneNames().toArray()));
+                //zoneNames[i] = Arrays.toString(timeHandler.getTimeStamps().toArray());
+            //}
         }
+        
         String barNames[] = {"Harry's",
             "Brother's Bar & Grill", "Neon Cactus",
             "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers",
@@ -546,8 +556,8 @@ public class HMJGUI extends javax.swing.JFrame {
         the name of the drink is recognized as being affiliated with an ID and
         that ID is affiliated to the relevant Alcohol content and volume.
             With that said, we may need to make a list for IDs, but only do this as a last resort
-        */
-        
+         */
+
     }//GEN-LAST:event_jcboDrinksSubActionPerformed
 
     /**

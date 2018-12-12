@@ -18,23 +18,32 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author dtdkn
+ * @author Alex
  */
 public class timeHandler {
 
-    List<String> Times = new ArrayList<>();
+    private static List<String> zoneNames = new ArrayList<>();
+    private static List<String> timeStamps = new ArrayList<>();
 
-    public static void main(String args[]) {
+    public static List<String> getZoneNames() {
+        return zoneNames;
+    }
+
+    public static List<String> getTimeStamps() {
+        return timeStamps;
+    }
+
+
+    public static void main() {
         //1544749680 is just an EXAMPLE for now
-        java.util.Date time = new java.util.Date((long) 1544749680 * 1000);
+        /*java.util.Date time = new java.util.Date((long) 1544749680 * 1000);
         String hour = time.toString().substring(11, 13);
         if (hour.equals("17")) {
             System.out.println(hour);
         } else {
             System.out.println("Don't drink yet!");
-        }
+        }*/
 
-        //LIKELY WILL MAKE INTO ITS OWN METHOD
         //REF: https://www.youtube.com/watch?v=HfGWVy-eMRc
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -43,7 +52,6 @@ public class timeHandler {
             //zoneName will be the unique identifier
             NodeList zList = doc.getElementsByTagName("zoneName");
             NodeList tList = doc.getElementsByTagName("timestamp");
-            //NodeList 
             for (int i = 0; i < zList.getLength(); i++) {
                 Node z = zList.item(i);
                 Node t = tList.item(i);
@@ -51,9 +59,8 @@ public class timeHandler {
                 if (z.getNodeType() == Node.ELEMENT_NODE) {
                     Element zt = (Element) z;
                     Element tt = (Element) t;
-                    //put these into arrays, rather than system.out
-                    System.out.println(zt.getTagName() + "=" + zt.getTextContent()
-                            + " " + tt.getTagName() + "=" + tt.getTextContent());
+                    zoneNames.add(zt.getTextContent());
+                    timeStamps.add(tt.getTextContent());
                 }
             }
         } catch (ParserConfigurationException ex) {
@@ -63,6 +70,9 @@ public class timeHandler {
         } catch (IOException ex) {
             Logger.getLogger(timeHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //System.out.println(Arrays.toString(zoneNames.toArray())); //test
+        //System.out.println(Arrays.toString(timeStamps.toArray())); //test
+
     }
 
 }
