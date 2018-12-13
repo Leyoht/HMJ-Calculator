@@ -13,18 +13,28 @@ import hmjcalc.objects.Person;
 import static hmjcalc.sqlTools.printSQLException;
 import java.util.*;
 import java.awt.FlowLayout;
+import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.*;
 //will need to import API stuff here
+
 /**
  *
  * @author Harrison, Alex
  */
-
 public class HMJGUI extends javax.swing.JFrame {
+
     private Person user = null;
     //Locale information; may be deleted later on
     Locale usEnglish = Locale.forLanguageTag("en-US");
@@ -47,11 +57,48 @@ public class HMJGUI extends javax.swing.JFrame {
     public HMJGUI() {
         initComponents();
         user = new Person();
-        String places[] = {"Sydney, Australia", "Canberra, Australia", "Magadan, Russia", "Chersky, Russia"};
-        //places[] will later need to hold values of things from the SQL database
-        for (int i = 0; i < 4; i++) {
-            jta5Oclock.append(places[i] + "\n");
+
+        /*timeHandler th = new timeHandler();
+        th.main(); //we need to run the main method somehow*/
+        //See if we can thread this from timeHandler if we get time
+        //Maybe look here: https://stackoverflow.com/questions/24770094/calling-a-class-from-another-class-with-main-method
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse("timezonedb.xml");
+            //zoneName will be the unique identifier
+            NodeList zList = doc.getElementsByTagName("zoneName");
+            NodeList tList = doc.getElementsByTagName("timestamp");
+            for (int i = 0; i < zList.getLength(); i++) {
+                Node z = zList.item(i);
+                Node t = tList.item(i);
+                //only need to loop through one item
+                if (z.getNodeType() == Node.ELEMENT_NODE) {
+                    Element zt = (Element) z;
+                    Element tt = (Element) t;
+                    long num = Long.valueOf(tt.getTextContent());
+                    java.util.Date time = new java.util.Date((long) num * 1000);
+                    String hour = time.toString().substring(11, 13);
+                    if (hour.equals("17")) {
+                        jta5Oclock.append(zt.getTextContent() + "\n");
+                    }
+                }
+            }
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(timeHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(timeHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(timeHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /*public class HelloThread extends Thread {
+        public void run() {
+        System.out.println("Hello from a thread!"); }
+        public static void main(String args[]) {
+        (new HelloThread()).start();
+        }
+        }*/
+
         String barNames[] = {"Harry's",
             "Brother's Bar & Grill", "Neon Cactus",
             "Hunters Pub", "The Pint", "Klondike Pub", "Nine Irish Brothers",
@@ -451,74 +498,49 @@ public class HMJGUI extends javax.swing.JFrame {
 
     private void jcboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDrinksActionPerformed
         jcboDrinksSub.setEnabled(true);
+        String beer[] = {"Budweiser", "Samuel Adams", "Coors Lite"};
+        String wine[] = {"French Roses", "Argentine Malbec", "California Zinfandel"};
+        String hLiquor[] = {"Svedka", "Genevieve", "Jameson"};
+        String wDrink[] = {"Rum and Coke", "Vodka Cranberry", "Tequila Cola"};
+        String sDrink[] = {"Margarita", "Pisco Sour", "Bloody Mary"};
+        //because ArrayUtils doesn't work anymore I guess
+        String mDrink[] = {"Rum and Coke", "Vodka Cranberry", "Tequila Cola",
+            "Margarita", "Pisco Sour", "Bloody Mary"};
+        String aDrink[] = {"Budweiser", "Samuel Adams", "Coors Lite",
+            "French Roses", "Argentine Malbec", "California Zinfandel", "Svedka",
+            "Genevieve", "Jameson", "Rum and Coke", "Vodka Cranberry",
+            "Tequila Cola", "Margarita", "Pisco Sour", "Bloody Mary"};
         ResultSet drinkset;
         //MOST OF THESE WILL THROW ERRORS BECAUSE THE DATABASE HAS NOT BEEN BUILT YET
         switch (jcboDrinks.getSelectedItem().toString()) {
             case "All Drinks":
-                //calling viewtable here will just require a try-catch
-                dModel = new DefaultComboBoxModel(drinkNames.toArray());
+                dModel = new DefaultComboBoxModel(aDrink);
                 jcboDrinksSub.setModel(dModel);
                 break;
             case "Beer":
-                try {
-                    getDrinks(conn, "Drink", "DrinkID", "1");
-                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
-                    jcboDrinksSub.setModel(dModel);
-                } catch (SQLException ex) {
-                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                dModel = new DefaultComboBoxModel(beer);
+                jcboDrinksSub.setModel(dModel);
                 break;
             case "Wine":
-                try {
-                    getDrinks(conn, "Drink", "DrinkID", "2");
-                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
-                    jcboDrinksSub.setModel(dModel);
-                    /*THE FOLLOWING BELOW IS FOR jboDrinksSub TO DEAL WITH
-                    jtaAContent.setText("12% ABV");
-                    Drink.setAC(0.12);*/
-                } catch (SQLException ex) {
-                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                dModel = new DefaultComboBoxModel(wine);
+                jcboDrinksSub.setModel(dModel);
                 break;
             case "Hard Liquor":
-                try {
-                    getDrinks(conn, "Drink", "DrinkID", "3");
-                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
-                    jcboDrinksSub.setModel(dModel);
-                    /*jtaAContent.setText("40% ABV");
-                    Drink.setAC(0.4);*/
-                } catch (SQLException ex) {
-                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                dModel = new DefaultComboBoxModel(hLiquor);
+                jcboDrinksSub.setModel(dModel);
                 break;
             case "All Mixed Drinks":
-                try {
-                    getDrinks(conn, "Drink", "DrinkID", "4");
-                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
-                    jcboDrinksSub.setModel(dModel);
-                    /*jtaAContent.setText("13% ABV");
-                    Drink.setAC(0.13);*/
-                } catch (SQLException ex) {
-                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            //TYPES OF MIX DRINKS DECLARED BELOW
-            //NOTE THAT THE ID NUMBERS MAY CHANGE
+                dModel = new DefaultComboBoxModel(mDrink);
+                jcboDrinksSub.setModel(dModel);
+                break;
             case "Well Drink":
-                try {
-                    getDrinks(conn, "WELL_DRINK", "MixID", "1");
-                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
-                    jcboDrinksSub.setModel(dModel);
-                } catch (SQLException ex) {
-                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                dModel = new DefaultComboBoxModel(wDrink);
+                jcboDrinksSub.setModel(dModel);
+                break;
             case "Specialty Drink":
-                try {
-                    getDrinks(conn, "WELL_DRINK", "MixID", "2");
-                    dModel = new DefaultComboBoxModel(drinkNames.toArray());
-                    jcboDrinksSub.setModel(dModel);
-                } catch (SQLException ex) {
-                    Logger.getLogger(HMJGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                dModel = new DefaultComboBoxModel(sDrink);
+                jcboDrinksSub.setModel(dModel);
+                break;
         }    }//GEN-LAST:event_jcboDrinksActionPerformed
 
     private void jcboBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboBarActionPerformed
@@ -535,19 +557,50 @@ public class HMJGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jcboBarActionPerformed
 
     private void jcboDrinksSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboDrinksSubActionPerformed
-        /*Want to see if there's a way to dynamically load these options with
-        * the JDBC information...
-        * I feel like a for loop would be able to do it...or maybe allow for something
-        * kind of like this:
-            * ResultSet drinkset = stmt.executeQuery(SELECT DrinkName, DrinkAbv, Volume FROM DRINK WHERE DrinkID = 1);
-        =================================
-        The drinkNames list has already been loaded into this area comboBox
-        Now we need to make it so that when somebody selects something in jcboDrinksSub,
-        the name of the drink is recognized as being affiliated with an ID and
-        that ID is affiliated to the relevant Alcohol content and volume.
-            With that said, we may need to make a list for IDs, but only do this as a last resort
-        */
-        
+        switch (jcboDrinksSub.getSelectedItem().toString()) {
+            case "Budweiser":
+                jtaAContent.setText("4.1% ABV");
+                break;
+            case "Samuel Adams":
+                jtaAContent.setText("5.4% ABV");
+                break;
+            case "Coors Lite":
+                jtaAContent.setText("4.2% ABV");
+                break;
+            case "French Roses":
+                jtaAContent.setText("12.7% ABV");
+                break;
+            case "Argentine Malbec":
+                jtaAContent.setText("13.8% ABV");
+                break;
+            case "California Zinfandel":
+                jtaAContent.setText("15% ABV");
+                break;
+            case "Genvieve":
+                jtaAContent.setText("47.3% ABV");
+                break;
+            case "Jameson":
+                jtaAContent.setText("40% ABV");
+                break;
+            case "Rum and Coke":
+                jtaAContent.setText("12.7% ABV");
+                break;
+            case "Vodka Cranberry":
+                jtaAContent.setText("18% ABV");
+                break;
+            case "Tequila Cola":
+                jtaAContent.setText("18% ABV");
+                break;
+            case "Margarita":
+                jtaAContent.setText("18% ABV");
+                break;
+            case "Pisco Sour":
+                jtaAContent.setText("20% ABV");
+                break;
+            case "Bloody Mary":
+                jtaAContent.setText("18% ABV");
+                break;
+        }
     }//GEN-LAST:event_jcboDrinksSubActionPerformed
 
     /**
@@ -564,16 +617,24 @@ public class HMJGUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HMJGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HMJGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HMJGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HMJGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HMJGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HMJGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HMJGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HMJGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

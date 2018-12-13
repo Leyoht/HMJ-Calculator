@@ -22,9 +22,9 @@ public class Person {
     public static boolean getSex() { return sex; }
     public static void setSex(boolean sex) {
         if (sex == true) {
-            Person.sex = true; //they are female
+            Person.sex = true; //they are male
         } else {
-            Person.sex = false; //they are male
+            Person.sex = false; //they are female
         }
     }
     
